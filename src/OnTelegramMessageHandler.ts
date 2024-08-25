@@ -1,5 +1,5 @@
 import TelegramBot from "node-telegram-bot-api";
-import { sendTelegramMessage } from "./TelegramBotSetup";
+import { sendTelegramMessage } from "./TelegramBotSetup.js";
 
 type TelegramOnListener = (
   message: TelegramBot.Message,

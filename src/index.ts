@@ -1,6 +1,6 @@
 import Express from "express";
-import { bot, sendToSubscribedUsers } from "./TelegramBotSetup";
-import { OnTelegramMessageHandler } from "./OnTelegramMessageHandler";
+import { bot, sendToSubscribedUsers } from "./TelegramBotSetup.js";
+import { OnTelegramMessageHandler } from "./OnTelegramMessageHandler.js";
 // Create a new express application instance
 const app = Express();
 // The port the express app will listen on
