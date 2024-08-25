@@ -5,6 +5,9 @@ config(); // Load environment variables from .env file
 
 const token = process.env.TELEGRAM_TOKEN as string;
 
+const usersThatReciveErrorReports =
+  process.env.USERS_THAT_RECIVE_ERROR_REPORTS?.split(",").filter(Boolean) || [];
+
 // Create a bot that uses 'polling' to fetch new updates
 export const bot = new TelegramBot(token, { polling: true });
 
@@ -20,4 +23,16 @@ export const sendTelegramMessage: (
   options?: SendMessageArguments[2]
 ) => Promise<void> = async (chatId, text, options) => {
   await bot.sendMessage(chatId, text, options);
+};
+
+// Jel ovo sranje smiješno?
+export const sendToSubscribedUsers = async (text: SendMessageArguments[1]) => {
+  try {
+    for (const user of usersThatReciveErrorReports) {
+      await sendTelegramMessage(user, text);
+    }
+  } catch (error) {
+    console.error("Error sending message to subscribed users", error);
+    sendToSubscribedUsers(text);
+  }
 };
