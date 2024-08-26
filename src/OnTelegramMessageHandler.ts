@@ -6,17 +6,10 @@ type TelegramOnListener = (
   metadata: TelegramBot.Metadata
 ) => any;
 
-export const OnTelegramMessageHandler: TelegramOnListener = (
-  message,
-  metadata
-) => {
+export const OnTelegramMessageHandler: TelegramOnListener = (message, metadata) => {
   const chatId = message.chat.id;
 
   console.log(message);
-  // send a message to the chat acknowledging receipt of their message
 
-  sendTelegramMessage(
-    chatId,
-    `Received your message ${chatId}. Poslano u MUP!`
-  );
+  sendTelegramMessage(chatId, `Received your message ${chatId}. Poslano u MUP!`);
 };

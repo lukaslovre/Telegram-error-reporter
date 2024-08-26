@@ -1,14 +1,17 @@
 import Express from "express";
 import { bot, sendToSubscribedUsers } from "./TelegramBotSetup.js";
 import { OnTelegramMessageHandler } from "./OnTelegramMessageHandler.js";
+
 // Create a new express application instance
 const app = Express();
 
+// Middleware to parse JSON requests
 app.use(Express.json());
 
-// Listen for any kind of message.
+// Telegram bot message handler
 bot.on("message", OnTelegramMessageHandler);
 
+// Endpoint to report errors
 app.post("/report_error", (req, res) => {
   const sentErrorReport = req.body;
 
@@ -18,14 +21,10 @@ app.post("/report_error", (req, res) => {
     return res.status(400).send("Request needs to be a valid JSON.");
   }
 
-  const stringifiedError = JSON.stringify(sentErrorReport, null, 2).slice(
-    0,
-    4096
-  ); // Max message length
-
+  const stringifiedError = JSON.stringify(sentErrorReport, null, 2).slice(0, 4096); // Max message length
   sendToSubscribedUsers(stringifiedError);
 
-  res.status(200).send();
+  res.status(200).send("OK");
 });
 
 // The port the express app will listen on
